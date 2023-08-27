@@ -18,8 +18,8 @@ export default function Login() {
     if (loginData) {
       const cookieData = await GET_COOKIE();
       if (cookieData) {
-        console.log(cookieData);
-        Cookies.set("name", cookieData, { expires: 7 });
+        console.log(cookieData.cookie);
+        Cookies.set("name", cookieData.cookie, { expires: 7 });
         push("/");
       }
     }
