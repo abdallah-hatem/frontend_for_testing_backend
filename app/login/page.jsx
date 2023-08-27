@@ -2,6 +2,7 @@
 import LOGIN from "../../lib/LOGIN";
 import GET_COOKIE from "../../lib/GetCookie";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 export default function Login() {
   const { push } = useRouter();
@@ -16,7 +17,11 @@ export default function Login() {
 
     if (loginData) {
       const cookieData = await GET_COOKIE();
-      cookieData && push("/");
+      if (cookieData) {
+        console.log(cookieData);
+        Cookies.set("name", cookieData, { expires: 7 });
+        push("/");
+      }
     }
   }
   return (
