@@ -19,7 +19,7 @@ export default function Login() {
       const cookieData = await GET_COOKIE();
       if (cookieData) {
         console.log(cookieData.cookie);
-        Cookies.set("name", cookieData.cookie, { expires: 7 });
+        Cookies.set("jwt", cookieData.cookie, { expires: 7 });
         push("/");
       }
     }
