@@ -16,11 +16,13 @@ export default function Login() {
     const loginData = await LOGIN(data);
 
     if (loginData) {
-      const cookieData = await GET_COOKIE();
-      if (cookieData) {
-        Cookies.set("jwt", cookieData.cookie, { expires: 7 });
-        push("/");
-      }
+      push("/");
+
+      // const cookieData = await GET_COOKIE();
+      // if (cookieData) {
+      //   Cookies.set("jwt", cookieData.cookie, { expires: 7 });
+      //   push("/");
+      // }
     }
   }
   return (
