@@ -1,5 +1,6 @@
 "use client";
 import LOGIN from "../../lib/LOGIN";
+import LOGOUT from "../../lib/LOGOUT";
 import GET_COOKIE from "../../lib/GetCookie";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
@@ -16,22 +17,33 @@ export default function Login() {
     const loginData = await LOGIN(data);
 
     if (loginData) {
-      push("/");
-
-      // const cookieData = await GET_COOKIE();
-      // if (cookieData) {
-      //   Cookies.set("jwt", cookieData.cookie, { expires: 7 });
-      //   push("/");
-      // }
+      const cookieData = await GET_COOKIE();
+      if (cookieData) {
+        Cookies.set("jwt", cookieData.cookie, { expires: 7 });
+        push("/");
+      }
     }
   }
+
+  async function handleLogout() {
+    const logout = await LOGOUT();
+    Cookies.remove("jwt");
+
+    logout && push("/login");
+  }
   return (
-    <form onSubmit={handleSubmit} style={{ padding: 10 }}>
-      <input name="email" type="email" placeholder="Email" />
-      <input name="password" type="password" placeholder="Password" />
-      <button name="button" type="submit">
-        Submit
+    <>
+      <form onSubmit={handleSubmit} style={{ padding: 10 }}>
+        <input name="email" type="email" placeholder="Email" />
+        <input name="password" type="password" placeholder="Password" />
+        <button name="button" type="submit">
+          Submit
+        </button>
+      </form>
+
+      <button name="button" onClick={handleLogout}>
+        Logout
       </button>
-    </form>
+    </>
   );
 }
